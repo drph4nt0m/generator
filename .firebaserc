@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "generator-rhul": {
+      "hosting": {
+        "generator": [
+          "generator-rhul"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "generator-rhul"
+  }
+}
