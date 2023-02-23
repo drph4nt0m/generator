@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { UsernameAndPasswordComponent } from './username-and-password/username-and-password.component';
+import { Component, ViewChild } from '@angular/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'pwd';
+  appTitle = 'Generator';
+
+  @ViewChild(UsernameAndPasswordComponent) usernameAndPassword: UsernameAndPasswordComponent;
+
+  onTabChanged(event: MatTabChangeEvent) {
+    switch(event.tab.textLabel) {
+      case "Username & Password":
+        return this.usernameAndPassword.generate();
+      case "TOTP":
+        return;
+    }
+  }
 }

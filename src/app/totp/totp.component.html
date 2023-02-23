@@ -1,0 +1,44 @@
+<div class="tab-content">
+  <form
+    class="totp-form"
+    [formGroup]="totpFormGroup"
+    (ngSubmit)="getTotp()"
+    ngNativeValidate
+  >
+    <mat-form-field class="totp-field">
+      <mat-label>TOTP Key</mat-label>
+      <input
+        matInput
+        [type]="hideTotpKey ? 'password' : 'text'"
+        formControlName="totpKey"
+      />
+      <button
+        type="button"
+        matSuffix
+        mat-icon-button
+        (click)="hideTotpKey = !hideTotpKey"
+      >
+        <mat-icon>{{ hideTotpKey ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+      <!-- <button
+        *ngIf="totpFormGroup.get('totpKey')?.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="totpFormGroup.get('totpKey')?.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button> -->
+      <button mat-icon-button matSuffix aria-label="Get TOTP">
+        <mat-icon>send</mat-icon>
+      </button>
+    </mat-form-field>
+  </form>
+
+  <div class="totp" *ngIf="totp">
+    <code>{{ totp }}</code>
+    <button mat-icon-button aria-label="Copy TOTP" (click)="copyTotp()">
+      <mat-icon>content_copy</mat-icon>
+    </button>
+  </div>
+</div>
