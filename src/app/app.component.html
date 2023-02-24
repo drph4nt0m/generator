@@ -2,16 +2,30 @@
   <button mat-icon-button [routerLink]="['/']">
     <mat-icon>lock_reset</mat-icon>
   </button>
-  <span>{{appTitle}}</span>
+  <span>{{ appTitle }}</span>
 </mat-toolbar>
 
-<mat-card class="card">
-  <mat-card-content>
-    <mat-tab-group mat-stretch-tabs (selectedTabChange)="onTabChanged($event)">
-      <mat-tab label="Username & Password"><app-username-and-password></app-username-and-password></mat-tab>
-      <mat-tab label="TOTP"><app-totp></app-totp></mat-tab>
-    </mat-tab-group>
-  </mat-card-content>
-</mat-card>
+<div class="container">
+  <mat-card class="card">
+    <mat-card-content>
+      <mat-tab-group
+        mat-stretch-tabs
+        (selectedTabChange)="onTabChanged($event)"
+      >
+        <mat-tab label="Username & Password"
+          ><app-username-and-password></app-username-and-password
+        ></mat-tab>
+        <mat-tab label="TOTP"><app-totp></app-totp></mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
 
 <router-outlet></router-outlet>
+
+<footer>
+  <span>
+    No backend server. No tracking/logging what is generated. Everything in your
+    browser.
+  </span>
+</footer>

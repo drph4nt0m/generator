@@ -1,5 +1,24 @@
-.card {
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  .card {
     width: 900px;
     max-width: 90vw;
+    min-height: 40vh;
     margin: 1rem auto;
+    margin-bottom: 5rem;
+  }
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #c2185b;
+  z-index: 999;
 }
