@@ -37,6 +37,18 @@
 
   <div class="totp" *ngIf="totp">
     <code>{{ totp }}</code>
+    <div class="secondsToReload">
+      <mat-progress-spinner
+        class="spinner"
+        color="primary"
+        mode="determinate"
+        diameter="30"
+        strokeWidth="2"
+        [value]="(secsToReload / 30) * 100"
+      >
+      </mat-progress-spinner>
+      <span class="seconds">{{ secsToReload }}</span>
+    </div>
     <button mat-icon-button aria-label="Copy TOTP" (click)="copyTotp()">
       <mat-icon>content_copy</mat-icon>
     </button>

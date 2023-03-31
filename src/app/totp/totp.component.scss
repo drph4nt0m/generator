@@ -10,10 +10,29 @@
       width: 400px;
       max-width: 100%;
     }
+  }
 
-    .totp {
-      font-size: 2rem;
-      margin-top: 1rem;
+  .totp {
+    display: flex;
+    flex-direction: row;
+    grid-gap: 1rem;
+    align-items: center;
+    font-size: 2rem;
+    margin-top: 1rem;
+
+    .secondsToReload {
+      display: grid;
+      place-items: center;
+      opacity: 0.7;
+
+      .spinner, .seconds {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .seconds {
+        font-size: 1rem;
+      }
     }
   }
 }

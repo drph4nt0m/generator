@@ -120,7 +120,10 @@ export class UsernameAndPasswordComponent implements OnInit {
     return generatePassword(passwordSettings);
   }
 
-  copyCredentials(index = -1) {
+  copyCredentials(
+    index = -1,
+    toCopy: 'username' | 'password' | 'both' = 'both'
+  ) {
     let successfullyCopied = true;
 
     let snackbarMessage = 'Credential copied to clipboard!';
@@ -131,18 +134,34 @@ export class UsernameAndPasswordComponent implements OnInit {
       if (index === -1) {
         const text =
           this.selection.selected
-            .map(
-              (credential: Credential) =>
-                `${credential.username} : ${credential.password}`
-            )
+            .map((credential: Credential) => {
+              switch (toCopy) {
+                case 'username':
+                  return credential.username;
+                case 'password':
+                  return credential.password;
+                case 'both':
+                  return `${credential.username} : ${credential.password}`;
+              }
+            })
             .join('\n') || ' ';
 
         successfullyCopied = this.clipboard.copy(text);
       } else {
         const credential = this.credentials.data[index];
-        successfullyCopied = this.clipboard.copy(
-          `${credential.username} : ${credential.password}`
-        );
+        let text = '';
+        switch (toCopy) {
+          case 'username':
+            text = credential.username;
+            break;
+          case 'password':
+            text = credential.password;
+            break;
+          case 'both':
+            text = `${credential.username} : ${credential.password}`;
+            break;
+        }
+        successfullyCopied = this.clipboard.copy(text);
       }
 
       if (index === -1 && this.selection.selected.length > 1) {

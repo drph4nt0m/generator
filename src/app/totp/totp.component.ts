@@ -1,5 +1,5 @@
 import { Clipboard } from '@angular/cdk/clipboard';
-import { Component, } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import TotpGenerator from 'totp-generator';
@@ -15,12 +15,14 @@ export class TotpComponent {
   });
   totp = '';
   hideTotpKey = true;
+  secsToReload = 60;
 
   constructor(
     private clipboard: Clipboard,
     private _snackBar: MatSnackBar,
     private _formBuilder: FormBuilder
-  ) {}
+  ) {
+  }
 
   getTotp() {
     if (this.totpFormGroup.invalid) {
@@ -33,6 +35,14 @@ export class TotpComponent {
     }
     try {
       this.totp = TotpGenerator(totpKey);
+      const interval = setInterval(() => {
+        const now = new Date();
+        this.secsToReload = 30 - (now.getSeconds() % 30);
+        if (this.secsToReload === 30) {
+          this.getTotp();
+          clearInterval(interval);
+        }
+      }, 200);
     } catch (error: any) {
       this._snackBar.open(error.message ?? 'Something went wrong', '', {
         duration: 1000,
