@@ -25,7 +25,6 @@ export class JsonPrettierComponent {
 
   formatJson(): void {
     try {
-      console.log(this.code);
       const repairedCode = jsonrepair(this.code);
       this.code = JSON.parse(stringify(repairedCode));
     } catch (err) {
