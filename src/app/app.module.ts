@@ -15,21 +15,30 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {
-  getAnalytics, provideAnalytics, ScreenTrackingService
+  getAnalytics,
+  provideAnalytics,
+  ScreenTrackingService,
 } from '@angular/fire/analytics';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { TotpComponent } from './totp/totp.component';
 import { UsernameAndPasswordComponent } from './username-and-password/username-and-password.component';
+import { JsonPrettierComponent } from './json-prettier/json-prettier.component';
+import { NgxCodejarModule } from 'ngx-codejar';
 
 @NgModule({
-  declarations: [AppComponent, UsernameAndPasswordComponent, TotpComponent],
+  declarations: [
+    AppComponent,
+    UsernameAndPasswordComponent,
+    TotpComponent,
+    JsonPrettierComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -50,6 +59,7 @@ import { UsernameAndPasswordComponent } from './username-and-password/username-a
     MatSliderModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    NgxCodejarModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
   ],

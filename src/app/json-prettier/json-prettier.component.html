@@ -1,0 +1,12 @@
+<div class="tab-content">
+  <form
+    class="json-form"
+    (ngSubmit)="formatJson()"
+    ngNativeValidate
+  >
+  <ngx-codejar [highlightMethod]="highlightMethod" [(code)]="code" [showLineNumbers]="true"></ngx-codejar>
+    <div class="submit">
+      <button mat-raised-button color="primary" type="submit">Parse</button>
+    </div>
+  </form>
+</div>

@@ -10,6 +10,7 @@
     <mat-card-content>
       <mat-tab-group
         mat-stretch-tabs
+        selectedIndex="2"
         (selectedTabChange)="onTabChanged($event)"
       >
         <mat-tab label="Username & Password">
@@ -17,6 +18,9 @@
         </mat-tab>
         <mat-tab label="TOTP">
           <app-totp></app-totp>
+        </mat-tab>
+        <mat-tab label="JSON Prettier">
+          <app-json-prettier></app-json-prettier>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>

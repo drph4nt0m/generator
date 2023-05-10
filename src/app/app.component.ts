@@ -8,7 +8,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  appTitle = 'Generator';
+  appTitle = 'Toolkit';
 
   @ViewChild(UsernameAndPasswordComponent) usernameAndPassword: UsernameAndPasswordComponent;
 
@@ -17,6 +17,8 @@ export class AppComponent {
       case "Username & Password":
         return this.usernameAndPassword.generate();
       case "TOTP":
+        return;
+      case "JSON prettier":
         return;
     }
   }
