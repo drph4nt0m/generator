@@ -11,7 +11,7 @@ import stringify from "json-stringify-pretty-compact";
   styleUrls: ['./json-prettier.component.scss'],
 })
 export class JsonPrettierComponent {
-  code = '{a:1}';
+  code = '{}';
 
   constructor() {}
 
