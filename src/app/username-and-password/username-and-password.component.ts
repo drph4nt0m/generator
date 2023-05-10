@@ -43,7 +43,7 @@ export class UsernameAndPasswordComponent implements OnInit {
   });
 
   credentials: MatTableDataSource<Credential>;
-  displayedColumns: string[] = ['select', 'username', 'password', 'copy'];
+  displayedColumns: string[] = ['select', 'username', 'password', 'actions'];
   selection = new SelectionModel<Credential>(true, []);
 
   constructor(
@@ -71,7 +71,7 @@ export class UsernameAndPasswordComponent implements OnInit {
     this.generate();
   }
 
-  generate(): void {
+  generate(index = -1, toGenerate: 'username' | 'password' | 'both' = 'both', isNew: boolean = true): void {
     if (this.settingsFormGroup.invalid) {
       console.error(this.settingsFormGroup.errors);
       return;
@@ -95,21 +95,69 @@ export class UsernameAndPasswordComponent implements OnInit {
       strict: settings.passwordSettings.strict ?? true,
     };
 
-    const numberOfCreds = settings.numberOfCreds ?? 5;
+    if (isNew) {
+      const numberOfCreds = settings.numberOfCreds ?? 5;
 
-    const credentials: Credential[] = [];
+      const credentials: Credential[] = [];
 
-    for (let i = 0; i < numberOfCreds; i++) {
-      credentials.push({
-        username: this.generateUsername(usernameSettings),
-        password: this.generatePassword(passwordSettings),
-      });
+      for (let i = 0; i < numberOfCreds; i++) {
+        credentials.push({
+          username: this.generateUsername(usernameSettings),
+          password: this.generatePassword(passwordSettings),
+        });
+      }
+
+      this.credentials = new MatTableDataSource(credentials);
+
+      this.selection.clear();
+      this.toggleAllRows();
+    } else {
+      const newCredentials = this.credentials.data;
+      const selectedIndexes = this.selection.selected.map((oldCredential) => this.credentials.data.findIndex((cred) => cred.username === oldCredential.username && cred.password === oldCredential.password));
+
+      if(index === -1) {
+        this.selection.selected.forEach((oldCredential) => {
+          const _index = this.credentials.data.findIndex((cred) => cred.username === oldCredential.username && cred.password === oldCredential.password)
+          const newCredential = {...oldCredential}
+
+          switch (toGenerate) {
+            case 'username':
+              newCredential.username = this.generateUsername(usernameSettings)
+              break;
+            case 'password':
+              newCredential.password = this.generatePassword(passwordSettings)
+              break;
+            case 'both':
+              newCredential.username = this.generateUsername(usernameSettings)
+              newCredential.password = this.generatePassword(passwordSettings)
+              break;
+          }
+
+          newCredentials.splice(_index, 1, newCredential);
+        })
+      } else {
+        const newCredential = {...this.credentials.data[index]}
+
+        switch (toGenerate) {
+          case 'username':
+            newCredential.username = this.generateUsername(usernameSettings)
+            break;
+          case 'password':
+            newCredential.password = this.generatePassword(passwordSettings)
+            break;
+          case 'both':
+            newCredential.username = this.generateUsername(usernameSettings)
+            newCredential.password = this.generatePassword(passwordSettings)
+            break;
+        }
+
+        newCredentials.splice(index, 1, newCredential);
+      }
+
+      this.credentials = new MatTableDataSource(newCredentials);
+      const toSelect = this.credentials.data.filter((credential, credentialIndex) => selectedIndexes.includes(credentialIndex))
+      this.selection.setSelection(...toSelect);
     }
-
-    this.credentials = new MatTableDataSource(credentials);
-
-    this.selection.clear();
-    this.toggleAllRows();
   }
 
   generateUsername(usernameSettings: UsernameSettings) {
